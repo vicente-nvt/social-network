@@ -1,0 +1,19 @@
+{
+  "name": "social-network",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vicente-nvt/social-network.git"
+  },
+  "author": "José Vicente Neto",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vicente-nvt/social-network/issues"
+  },
+  "homepage": "https://github.com/vicente-nvt/social-network#readme"
+}
