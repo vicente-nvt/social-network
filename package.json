@@ -15,5 +15,10 @@
   "bugs": {
     "url": "https://github.com/vicente-nvt/social-network/issues"
   },
-  "homepage": "https://github.com/vicente-nvt/social-network#readme"
+  "homepage": "https://github.com/vicente-nvt/social-network#readme",
+  "dependencies": {
+    "express": "^4.16.4",
+    "jade": "^1.11.0",
+    "mongoose": "^5.4.11"
+  }
 }

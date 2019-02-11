@@ -1,9 +1,9 @@
 require.config({
     paths: {
         jQuery: '/js/libs/jquery',
-        Underscore: '/js/libs/underscore.js',
-        Backbone: '/js/libs/backbone.js',
-        text: '/js/libs/text.js',
+        Underscore: '/js/libs/underscore',
+        Backbone: '/js/libs/backbone',
+        text: '/js/libs/text',
         templates: '../templates'
     },
     shim: {
@@ -13,5 +13,5 @@ require.config({
 });
 
 require(['SocialNet'], (socialNet) => {
-    socialNet.Initialize();
+    socialNet.initialize();
 })
