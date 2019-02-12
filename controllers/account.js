@@ -1,4 +1,4 @@
-var Account = require('../models/account');
+var Account = require('../models/account').default;
 
 var isAuthenticated = (req, res) => {
     if (req.session.loggedIn)
@@ -54,7 +54,7 @@ var setNewPassword = (req, res) => {
 }
 
 module.exports = {
-    checkAuthenticated: isAuthenticated,
+    isAuthenticated: isAuthenticated,
     registerAccount: registerAccount,
     forgotPassword: forgotPassword,
     renderResetPassword: renderResetPassword,

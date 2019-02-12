@@ -1,48 +1,53 @@
-module.exports = (config, mongoose, nodemailer) => {
-    var crypto = require('crypto');
+var crypto = require('crypto');
 
-    var AccountSchema = new mongoose.Schema({
-        email: { type: String, unique: true },
-        password: { type: String },
-        name: {
-            first: { type: String },
-            last: { type: String }
-        },
-        birthday: {
-            day: { type: Number, min: 1, max: 31, require: false },
-            month: { type: Number, min: 1, max: 12, require: false },
-            year: { type: Number }
-        },
-        photoUrl: { type: String },
-        biography: { type: String }
-    });
+class Account {
+    constructor(config, mongoose, nodemailer) {
+        this.config = config
+        this.nodemailer = nodemailer
 
-    var Account = mongoose.model('Account', AccountSchema);
+        var AccountSchema = new mongoose.Schema({
+            email: { type: String, unique: true },
+            password: { type: String },
+            name: {
+                first: { type: String },
+                last: { type: String }
+            },
+            birthday: {
+                day: { type: Number, min: 1, max: 31, require: false },
+                month: { type: Number, min: 1, max: 12, require: false },
+                year: { type: Number }
+            },
+            photoUrl: { type: String },
+            biography: { type: String }
+        });
 
-    var registerCallback = (err) => {
+        this.Account = mongoose.model('Account', AccountSchema);
+    }
+
+    registerCallback(err) {
         if (err)
             return console.log(err);
 
         return console.log('Account was created');
     }
-
-    var changePassword = (accountId, newPassword) => {
+    
+    changePassword (accountId, newPassword) {
         var shaSum = crypto.createHash('sha256');
         shaSum.update(newPassword);
         var hashedPassword = shaSum.digest('hex');
-
-        Account.update({ _id: accountId },
+    
+        this.Account.update({ _id: accountId },
             { $set: { password: hashedPassword } },
             { upsert: false },
             () => { console.log('Change password done for account ' + accountId); });
     }
 
-    var forgotPassword = (email, resetPasswordUrl, callback) => {
-        Account.findOne({ email: email }, (err, doc) => {
+    forgotPassword (email, resetPasswordUrl, callback) {
+        this.Account.findOne({ email: email }, (err, doc) => {
             if (err)
                 callback(false);
             else {
-                var smtpTransport = nodemailer.createTransport('SMTP', config.mail);
+                var smtpTransport = this.nodemailer.createTransport('SMTP', this.config.mail);
                 resetPasswordUrl += '?account=' + doc._id;
                 smtpTransport.sendMail({
                     from: 'thisapp@example.com',
@@ -59,19 +64,19 @@ module.exports = (config, mongoose, nodemailer) => {
         });
     }
 
-    var login = (email, password, callback) => {
+    login(email, password, callback) {
         var shaSum = crypto.createHash('sha256');
         shaSum.update(password);
-        Account.findOne({email: email, password: shaSum.digest('hex')}, (err, doc) => {
+        this.Account.findOne({email: email, password: shaSum.digest('hex')}, (err, doc) => {
             callback(doc != null);
         })
     }
 
-    var register = (email, password, firstName, lastName) => {
+    register(email, password, firstName, lastName) {
         var shaSum = crypto.createHash('sha256');
         shaSum.update(password);
 
-        var user = new Account({
+        var user = new this.Account({
             email: email,
             name: { 
                 first: firstName,
@@ -82,12 +87,6 @@ module.exports = (config, mongoose, nodemailer) => {
 
         user.save(registerCallback);
     }
-
-    return {
-        register: register,
-        forgotPassword: forgotPassword,
-        changePassword: changePassword,
-        login: login,
-        Account: Account
-    }
 }
+
+module.exports = Account;

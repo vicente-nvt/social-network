@@ -17,12 +17,15 @@
   },
   "homepage": "https://github.com/vicente-nvt/social-network#readme",
   "dependencies": {
+    "body-parser": "^1.18.3",
+    "connect": "^3.6.6",
     "consign": "^0.1.6",
+    "cookie-parser": "^1.4.3",
+    "cookie-session": "^2.0.0-beta.3",
     "express": "^4.16.4",
-    "express-session": "^1.15.6",
     "mongoose": "^5.4.11",
-    "pug": "^2.0.3",
-    "uuid": "^3.3.2"
+    "nodemailer": "^5.1.1",
+    "pug": "^2.0.3"
   },
   "devDependencies": {
     "eslint": "^5.13.0",
