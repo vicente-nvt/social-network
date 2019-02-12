@@ -7,8 +7,8 @@ require.config({
         templates: '../templates'
     },
     shim: {
-        'Backbone' : ['Underscore', 'jQuery'],
-        'SocialNet' : ['Backbone']
+        'Backbone': ['Underscore', 'jQuery'],
+        'SocialNet': ['Backbone']
     }
 });
 

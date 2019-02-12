@@ -4,20 +4,20 @@ define(['text!templates/login.html'], (loginTemplate) => {
         events: {
             "submit form": "login"
         },
-        login: function() {
-            $.post('/login', { 
+        login: function () {
+            $.post('/login', {
                 email: $('input[name=email]').val(),
                 password: $('input[name=password').val()
             },
-            (data) => { console.log(data); })
-            .error(() => {
-                let error = $("#error");
-                $(error).text('Unable to login');
-                $(error).slideDown();
-            });
+                (data) => { console.log(data); })
+                .error(() => {
+                    let error = $("#error");
+                    $(error).text('Unable to login');
+                    $(error).slideDown();
+                });
             return false;
         },
-        render: function() {
+        render: function () {
             this.$el.html(loginTemplate);
             $("#error").hide();
         }

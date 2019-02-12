@@ -1,8 +1,8 @@
 var Account = require('../models/account');
-    
+
 var login = (req, res) => {
-    var email = req.param('email', '');
-    var password = req.param('password', '');
+    var email = req.params.email;
+    var password = req.params.password;
 
     if (null == email || email.length < 1 || null == password || password.length < 1) {
         res.sendStatus(400)
@@ -15,7 +15,7 @@ var login = (req, res) => {
             return
         }
         res.sendStatus(200)
-    })    
+    })
 }
 
 module.exports = {

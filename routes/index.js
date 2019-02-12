@@ -1,8 +1,8 @@
-var IndexController = require('../controllers/index')
+var indexController = require('../controllers/index')
 
 module.exports = (app) => {
     app.get('/', (req, res) => {
-        IndexController.renderIndex(req, res);
+        indexController.renderIndex(req, res);
     });
 }
 

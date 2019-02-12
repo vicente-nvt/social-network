@@ -12,9 +12,9 @@ define(['text!templates/register.html'], (registerTemplate) => {
                 email: $('input[name=email]').val(),
                 password: $('input[name=password]').val(),
             },
-            (data) => {
-                console.log(data)
-            });
+                (data) => {
+                    console.log(data)
+                });
 
             return false;
         },
