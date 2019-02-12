@@ -17,8 +17,13 @@
   },
   "homepage": "https://github.com/vicente-nvt/social-network#readme",
   "dependencies": {
+    "consign": "^0.1.6",
     "express": "^4.16.4",
-    "jade": "^1.11.0",
-    "mongoose": "^5.4.11"
+    "express-session": "^1.15.6",
+    "mongoose": "^5.4.11",
+    "pug": "^2.0.3"
+  },
+  "devDependencies": {
+    "eslint": "^5.13.0"
   }
 }
