@@ -85,7 +85,7 @@ class Account {
             password: shaSum.digest('hex')
         })
 
-        user.save(registerCallback);
+        user.save(this.registerCallback);
     }
 }
 

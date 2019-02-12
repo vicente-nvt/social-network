@@ -17,11 +17,11 @@ app.set('nodemailer', nodemailer)
 
 app.set('view engine', 'pug')
 app.use(express.static(__dirname + '/public'))
-app.use(bodyParser());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use(cookieSession({ name:'session', keys: ['$0c14LN3tw0rK'], maxAge: 24*60*60*1000 }));
+app.use(cookieSession({ name:'session', keys: ['$0c14LN3tw0rK'], maxAge: 24*60*60*1000 }))
 
-//mongoose.connect('mongodb://localhost/nodebackbone')
+mongoose.connect('mongodb://localhost/nodebackbone')
 
 consign()
   .include('routes')

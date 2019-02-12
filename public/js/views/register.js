@@ -6,7 +6,7 @@ define(['text!templates/register.html'], (registerTemplate) => {
             "submit form": "register"
         },
         register: function () {
-            $.post('/register', {
+            $.post('/account/register', {
                 firstName: $('input[name=firstName]').val(),
                 lastName: $('input[name=lastName]').val(),
                 email: $('input[name=email]').val(),

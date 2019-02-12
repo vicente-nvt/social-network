@@ -1,62 +1,66 @@
-var Account = require('../models/account').default;
+var Account = require('../models/account');
 
-var isAuthenticated = (req, res) => {
-    if (req.session.loggedIn)
-        res.sendStatus(200)
-    else
-        res.sendStatus(401)
-}
+class AccountController {
 
-var registerAccount = (req, res) => {
-    var firstName = req.param('firstName', '');
-    var lastName = req.param('lastName', '');
-    var email = req.param('email', null);
-    var password = req.param('password', null);
+    constructor(config, mongoose, nodemailer) {
+        this.Account = new Account(config, mongoose, nodemailer);
+    }
 
-    if (null == email || null == password) {
-        res.sendStatus(400);
+    isAuthenticated(req, res) {
+        console.log(req.session)
+        if (req.session.loggedIn)
+            res.sendStatus(200)
+        else
+            res.sendStatus(401)
+    }
+
+    registerAccount(req, res) {
+        var firstName = req.body.firstName
+        var lastName = req.body.lastName
+        var email = req.body.email
+        var password = req.body.password
+
+        console.log(req.body)
+
+        if (null == email || null == password) {
+            res.sendStatus(400);
+            return;
+        }
+
+        this.Account.register(email, password, firstName, lastName);
+        res.sendStatus(201);
         return;
     }
 
-    Account.register(email, password, firstName, lastName);
-    res.sendStatus(201);
-    return;
-}
-
-var forgotPassword = (req, res) => {
-    var hostname = req.headers.host
-    var resetPasswordUrl = "http://" + hostname + '/account/resetPassword'
-    var email = req.param('email', '')
-    if (null == email || email.length < 1) {
-        res.sendStatus(400)
-        return
+    forgotPassword(req, res) {
+        var hostname = req.headers.host
+        var resetPasswordUrl = "http://" + hostname + '/account/resetPassword'
+        var email = req.params.email
+        if (null == email || email.length < 1) {
+            res.sendStatus(400)
+            return
+        }
+        this.Account.forgotPassword(email, resetPasswordUrl, (success) => {
+            if (success)
+                res.sendStatus(200)
+            else
+                res.sendStatus(404)
+        })
     }
 
-    Account.forgotPassword(email, resetPasswordUrl, (success) => {
-        if (success)
-            res.sendStatus(200)
-        else
-            res.sendStatus(404)
-    })
+    renderResetPassword(req, res) {
+        var accountId = req.params.account
+        res.render('resetPassword.pug', { locals: { accountId: accountId } })
+    }
+
+    setNewPassword(req, res) {
+        var accountId = req.params.accountId
+        var password = req.param.password
+        if (null != accountId && null != password)
+            this.Account.changePassword(accountId, password)
+        res.render('resetPasswordSuccess.pug')
+    }
+
 }
 
-var renderResetPassword = (req, res) => {
-    var accountId = req.param('account', null)
-    res.render('resetPassword.pug', { locals: { accountId: accountId } })
-}
-
-var setNewPassword = (req, res) => {
-    var accountId = req.param('accountId', null)
-    var password = req.param('password', null)
-    if (null != accountId && null != password)
-        Account.changePassword(accountId, password)
-    res.render('resetPasswordSuccess.pug')
-}
-
-module.exports = {
-    isAuthenticated: isAuthenticated,
-    registerAccount: registerAccount,
-    forgotPassword: forgotPassword,
-    renderResetPassword: renderResetPassword,
-    setNewPassword: setNewPassword
-}
+module.exports = AccountController;
