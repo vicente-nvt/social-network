@@ -1,6 +1,6 @@
 var Account = require('../models/account');
 
-var checkAuthenticated = (req, res) => {
+var isAuthenticated = (req, res) => {
     if (req.session.loggedIn)
         res.sendStatus(200)
     else
@@ -54,7 +54,7 @@ var setNewPassword = (req, res) => {
 }
 
 module.exports = {
-    checkAuthenticated: checkAuthenticated,
+    checkAuthenticated: isAuthenticated,
     registerAccount: registerAccount,
     forgotPassword: forgotPassword,
     renderResetPassword: renderResetPassword,

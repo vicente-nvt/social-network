@@ -2,7 +2,7 @@ var accountController = require('../controllers/account')
 
 module.exports = (app) => {
     app.get('/account/authenticated', (req, res) => {
-        accountController.checkAuthenticated(req, res)
+        accountController.isAuthenticated(req, res)
     })
 
     app.post('/account/register', (req, res) => {
